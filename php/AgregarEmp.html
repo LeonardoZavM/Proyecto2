@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<form id="agregaremp" >
+        <h2>INSERTA Empleado</h2>
+        <label for="txt_id">id</label>
+        <input type="text" id="txt_id" value=""><br>
+        <label for="txt_Nombre">Nombre</label>
+        <input type="text" id="txt_Nombre" value=""><br>
+        <label for="txt_Apellidos">apellidos</label>
+        <input type="text" id="txt_Apellidos" value=""><br>
+        <label for="txt_Correo">Correo</label>
+        <input type="text" id="txt_Correo" value=""><br>
+        <input type="submit" id="btn_enviar" value="inserta">
+		<p id="mip"></p>
+    </form>
+	<script>
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(event){
+                event.preventDefault();
+                let id=document.getElementById("txt_id").value;
+                let Nombre=document.getElementById("txt_Nombre").value;
+                let Apellidos=document.getElementById("txt_Apellidos").value;
+                let Correo=document.getElementById("txt_Correo").value;
+
+
+                let parametros="?&id="+id+"&Nombre="+Nombre+"&Apellidos="+Apellidos+"&Correo="+Correo; 
+                let request = new Request('agregaremp.php'+parametros, 
+                {
+                    method: 'get',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>

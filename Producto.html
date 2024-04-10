@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuestraProducto</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body>
+    <div class="w3-col l8 w3-padding">
+        <div class="w3-panel w3-cyan w3-padding-16">
+            Datos existentes
+        </div>
+        <table class="w3-table-all">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>Nombre</td>
+                    <td>Stock</td>
+                </tr>
+            </thead>
+            <tbody id="tbl_datos">
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script>
+    window.onload=function(){
+        fetch('http://localhost/Proyecto/php/leerproductos.php')
+        .then(response=>{
+            if(response.ok){
+                response.json()
+               .then(function (datosjson){
+                    datos=datosjson.slice(0,10)
+                    let s="";
+                    datos.forEach(element => {
+                        s+=`
+                            <tr>
+                            <td>${element.id}</td>
+                            <td>${element.Nombre}</td>
+                            <td>${element.Stock}</td>
+                            </tr>
+                        `;
+                    });
+                    document.querySelector("#tbl_datos").innerHTML=s;
+                });
+            }
+        })
+    }
+</script>
+</html>
